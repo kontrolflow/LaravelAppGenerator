@@ -16,13 +16,13 @@ class AppToGenerate
 
     private function modelDetails() {
 
-        $model['name'] = 'Tool';
-        $model['noSpaces'] = 'Tool'; // Used in Model Name
-        $model['camelCase'] = 'tool';
+        $model['Name'] = 'Tool'; // Spaces Allowed
+        $model['NoSpaces'] = 'Tool'; // Used in Model
+        $model['camelCase'] = 'tool'; // Used everywhere
+        $model['camelCasePlural'] = 'tools';
 
-        $model['pluralName'] = 'Tools';
         $model['pluralNoSpaces'] = 'Tools';
-        $model['pluralCamelcase'] = 'tools';
+        $model['pluralName'] = 'Tools';
 
         $model['route'] = 'tools'; // Used in route creation
 

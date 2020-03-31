@@ -18,7 +18,7 @@ class ModelGenerator {
         //var_dump($this->model['dbProperties']);
         $this->generateFolders();
         $this->generateRoute();
-        //$this->generateController();
+        $this->generateController();
         //$this->generateModel();
         //$this->generateCreateForm();
         //$this->generateEditForm();
@@ -59,30 +59,34 @@ class ModelGenerator {
         $routeFileContents = file_get_contents($routeFilePath);
 		
 		//Insert Creation Validation Fields into Controller
-        $routeFileContents .= "\n\nRoute::resource('".$this->model['route']."', '".$this->model['noSpaces']."Controller');";
+        $routeFileContents .= "\n\nRoute::resource('".$this->model['route']."', '".$this->model['NoSpaces']."Controller');";
 
         //Save Modifications
         file_put_contents($routeFilePath, $routeFileContents);
 	}
 	
 	private function generateController() {
-        //var_dump($this->model['createForm']);
-        $validationFields = '';
-        foreach($this->model['createForm'] as $prop => $data) {
-            $validationFields .= "\t\t" . '$validationFields["' . $prop . '"] = "' . $data[2] . '";' . "\n";
-        }
-        echo $validationFields;
 
-        //Insert Creation Validation Fields into Controller
-        $createFormTemplate = dirname(__FILE__) . '/../templates/Controller.php';
-        $createForm = file_get_contents($createFormTemplate);
-        $finishedForm = preg_replace('/\$validationFields\$/', $validationFields, $createForm);
-        //$finishedForm = preg_replace('/\$formFields\$/', $formFields, $finishedForm);
+        $routeTag = '#ROUTE#';
+        $pluralCamelCaseTag = 'camelCasePlural';
+        $NoSpacesTag = 'NoSpaces';
+        $camelCaseTag = 'camelCase';
+        $NameTag = 'Name';
+
+        //Get Controller Template
+        $controllerTemplate = dirname(__FILE__) . '/../templates/Controller.php';
+        $controller = file_get_contents($controllerTemplate);
+
+        //Insert Data Into Template
+        $controller = preg_replace('/NoSpaces/', $this->model['NoSpaces'], $controller);
+        $controller = preg_replace('/Name/', $this->model['Name'], $controller);
+        $controller = preg_replace('/camelCasePlural/', $this->model['camelCasePlural'], $controller);
+        $controller = preg_replace('/camelCase/', $this->model['camelCase'], $controller);
+        $controller = preg_replace('/#ROUTE#/', $this->model['route'], $controller);
 
         //Save Modified Template into File
-//        $folder =  $this->app['root'] . 'app/Http/Controllers/' . $this->model['name'];
         $folder =  $this->app['root'] . '/app/Http/Controllers';
-        file_put_contents($folder . '/TestController.php', $finishedForm);
+        file_put_contents($folder . '/'. $this->model['NoSpaces'] .'Controller.php', $controller);
     }
 
     private function generateCreateForm() {
@@ -114,4 +118,14 @@ class ModelGenerator {
 
     }
 
+
+    private function generateModel() {
+        $validationFields = '';
+        foreach($this->model['createForm'] as $prop => $data) {
+            $validationFields .= "\t\t" . '$validationFields["' . $prop . '"] = "' . $data[2] . '";' . "\n";
+        }
+        echo $validationFields;
+
+
+    }
 }
