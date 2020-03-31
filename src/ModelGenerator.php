@@ -16,12 +16,12 @@ class ModelGenerator {
 
     private function generate() {
         //var_dump($this->model['dbProperties']);
-        //$this->generateFolders();
-        //$this->generateRoute();
-        //$this->generateController();
-        //$this->generateModel();
-        //$this->generateCreateForm();
-        //$this->generateEditForm();
+        $this->generateFolders();
+        $this->generateRoute();
+        $this->generateController();
+        $this->generateModel();
+        $this->generateCreateForm();
+        $this->generateEditForm();
     }
 
     private function generateFolders() {
@@ -109,12 +109,44 @@ class ModelGenerator {
         //Insert Form Fields into Create Form Template
         $createFormTemplate = dirname(__FILE__) . '/../templates/create.blade.php';
         $createForm = file_get_contents($createFormTemplate);
-        $finishedForm = preg_replace('/\$modelDisplayName\$/', $this->model['displayName'], $createForm);
+        $finishedForm = preg_replace('/\$modelDisplayName\$/', $this->model['Name'], $createForm);
         $finishedForm = preg_replace('/\$formFields\$/', $formFields, $finishedForm);
 
         //Save Modified Template into File
-        $folder =  $this->app['root'] . '/resources/views/models/' . $this->model['name'];
+        $folder =  $this->app['root'] . '/resources/views/models/' . $this->model['camelCase'];
         file_put_contents($folder . '/create.blade.php', $finishedForm);
+
+    }
+
+    private function generateEditForm() {
+
+        //Generate Form Fields
+        $formFields = '';
+        foreach ($this->model['editForm'] as $prop => $data) {
+            $propDisplay = $data[0];
+
+            $formInputTemplateFile = dirname(__FILE__) . '/../templates/editFormInputText.blade.php';
+            $formInputTemplate = file_get_contents($formInputTemplateFile);
+
+            $formField = preg_replace('/MpropM/', $prop, $formInputTemplate);
+            $formField = preg_replace('/MpropDisplayM/', $propDisplay, $formField);
+            $formField = preg_replace('/McamelCaseM/', $this->model['camelCase'], $formField);
+
+            $formFields .= $formField;
+        }
+
+        //Insert Form Fields into Create Form Template
+        $editFormTemplate = dirname(__FILE__) . '/../templates/edit.blade.php';
+        $editForm = file_get_contents($editFormTemplate);
+
+        $editForm = preg_replace('/#ROUTE#/', $this->model['route'], $editForm);
+        $editForm = preg_replace('/Name/', $this->model['Name'], $editForm);
+        $editForm = preg_replace('/camelCase/', $this->model['camelCase'], $editForm);
+        $editForm = preg_replace('/\$formFields\$/', $formFields, $editForm);
+
+        //Save Modified Template into File
+        $folder =  $this->app['root'] . '/resources/views/models/' . $this->model['camelCase'];
+        file_put_contents($folder . '/edit.blade.php', $editForm);
 
     }
 
