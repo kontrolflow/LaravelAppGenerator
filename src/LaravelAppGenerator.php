@@ -4,32 +4,30 @@ namespace kontrolflow\LaravelAppGenerator;
 
 class LaravelAppGenerator
 {
+    var $app;
 
-	public static function test()
+	function __construct()
 	{
-		echo 'Hello World';
+        // Get The Formatted Application Requirements
+        $app = new AppToGenerate;
+        $this->app = $app->app;
+
+        $this->init();
 	}
 
-    public static function init() {
+     private function init() {
 
-        $app = new AppToGenerate;
-        $app->init();
+	    //
 
 
-        $file = '/var/www/laravelApp/app/LaravelAppGenerator/sandbox/test.txt';
+        // Generate Needed Folders
 
-        // Open the file to get existing content
-        $current = file_get_contents($file);
 
-        // Append a new person to the file
-        $current .= "John Smith\n";
-
-        echo $current;
-
-        // Write the contents back to the file
-        //file_put_contents($file, $current);
+	    // Generate Models
+        foreach($this->app['models'] as $model) {
+            new ModelGenerator($model, $this->app);
+        }
 
     }
-
 
 }

@@ -1,0 +1,16 @@
+		<div class="form-group">
+            <label for="$property$">$propertyReadable$</label>
+            <input
+                type="text"
+                class="form-control flex-fill @error('$property$') is-invalid @enderror"
+                id="$property$"
+                name="$property$"
+                placeholder=""
+                value="{{ old('$property$') }}"
+            >
+            @error('$property$')
+            <div class="invalid-feedback">
+                {{  $errors->first('$property$') }}
+            </div>
+            @enderror
+        </div>
