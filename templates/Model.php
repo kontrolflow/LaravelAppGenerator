@@ -4,44 +4,53 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Template extends Model
+class NoSpaces extends Model
 {
     public static function indexFields(){
-        return array('id' => 'ID', 'name' => 'Name', 'description' => 'Description');
+        $fields = array();
+
+$indexFields;
+        return $fields;
     }
 
     public static function createFormValidations()
     {
-        $validationFields = [];
+        $fields = array();
 
-        $validationFields['name'] = 'required';
-        $validationFields['description'] = 'required';
-
-        return $validationFields;
+$createFormValidationFields;
+        return $fields;
     }
 
     public static function storedFieldsFromForm()
     {
-        return array('name', 'description', 'inventor', 'dateInvented');
+        $fields = array();
+
+$storedFieldsFromForm;
+        return $fields;
     }
 
     public static function showFields()
     {
-        return array('id' => 'ID', 'name' => 'Name', 'description' => 'Description', 'inventor'=>'Inventor', 'dateInvented'=>'Date Invented');
+        $fields = array();
+
+$showFields;
+        return $fields;
     }
 
     public static function editFormValidations()
     {
-        $validationFields = [];
+        $fields = array();
 
-        $validationFields['name'] = 'required';
-        $validationFields['description'] = 'required';
-
-        return $validationFields;
+$editFormValidations;
+        return $fields;
     }
 
     public static function updatedFieldsFromForm()
     {
-        return array('name', 'description', 'inventor', 'dateInvented');
+        $fields = array();
+
+$updatedFieldsFromForm;
+        return $fields;
     }
+
 }

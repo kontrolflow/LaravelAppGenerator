@@ -28,7 +28,7 @@ class AppToGenerate
 
         $model['dbProperties'] = array('id, name, description, inventor, dateInvented');
 
-        $model['index'] = array('id, name, description');
+        $model['index'] = array('id' => 'ID', 'name' => 'Name', 'description' => 'Description');
 
         $model['createForm'] = array();
         $model['createForm']['name'] = array('Name', 'text', 'required');
@@ -36,7 +36,7 @@ class AppToGenerate
         $model['createForm']['inventor'] = array('Inventor', 'text', 'required');
         $model['createForm']['dateInvented'] = array('Date Invented', 'text', 'required');
 
-        $model['store'] = array('name, description, inventor, dateInvented');
+        $model['store'] = array('name', 'description', 'inventor', 'dateInvented');
 
         $model['show'] = array('id' => 'ID', 'name' => 'Name', 'description' => 'Description', 'inventor'=>'Inventor', 'dateInvented'=>'Date Invented');
 
@@ -45,7 +45,7 @@ class AppToGenerate
         $model['editForm']['inventor'] = array('Inventor', 'text', 'required');
         $model['editForm']['dateInvented'] = array('Date Invented', 'text', 'required');
 
-        $model['update'] = array('name, description, inventor, dateInvented');
+        $model['update'] = array('name', 'description', 'inventor', 'dateInvented');
 
         $this->app['models'][] = $model;
     }

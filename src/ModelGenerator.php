@@ -16,9 +16,9 @@ class ModelGenerator {
 
     private function generate() {
         //var_dump($this->model['dbProperties']);
-        $this->generateFolders();
-        $this->generateRoute();
-        $this->generateController();
+        //$this->generateFolders();
+        //$this->generateRoute();
+        //$this->generateController();
         //$this->generateModel();
         //$this->generateCreateForm();
         //$this->generateEditForm();
@@ -120,12 +120,53 @@ class ModelGenerator {
 
 
     private function generateModel() {
-        $validationFields = '';
-        foreach($this->model['createForm'] as $prop => $data) {
-            $validationFields .= "\t\t" . '$validationFields["' . $prop . '"] = "' . $data[2] . '";' . "\n";
+        $indexFields = '';
+        foreach($this->model['index'] as $prop => $data) {
+            $indexFields .= "\t\t" . '$fields["' . $prop . '"] = "' . $data . '";' . "\n";
         }
-        echo $validationFields;
 
+        $createFormValidationFields = '';
+        foreach($this->model['createForm'] as $prop => $data) {
+            $createFormValidationFields .= "\t\t" . '$fields["' . $prop . '"] = "' . $data[2] . '";' . "\n";
+        }
 
+        $storedFieldsFromForm = '';
+        foreach($this->model['store'] as $prop) {
+            $storedFieldsFromForm .= "\t\t" . '$fields[] = "' . $prop . '";' . "\n";
+        }
+
+        $showFields = '';
+        foreach($this->model['show'] as $prop => $data) {
+            $showFields .= "\t\t" . '$fields["' . $prop . '"] = "' . $data . '";' . "\n";
+        }
+
+        $editFormValidations = '';
+        foreach($this->model['editForm'] as $prop => $data) {
+            $editFormValidations .= "\t\t" . '$fields["' . $prop . '"] = "' . $data[2] . '";' . "\n";
+        }
+
+        $updatedFieldsFromForm = '';
+        foreach($this->model['update'] as $prop) {
+            $updatedFieldsFromForm .= "\t\t" . '$fields[] = "' . $prop . '";' . "\n";
+        }
+
+        //Get Model Template
+        $modelTemplate = dirname(__FILE__) . '/../templates/Model.php';
+        $model = file_get_contents($modelTemplate);
+
+        //Insert Data Into Template
+        $model = preg_replace('/NoSpaces/', $this->model['NoSpaces'], $model);
+        $model = preg_replace('/\$indexFields;/', $indexFields, $model);
+        $model = preg_replace('/\$createFormValidationFields;/', $createFormValidationFields, $model);
+        $model = preg_replace('/\$storedFieldsFromForm;/', $storedFieldsFromForm, $model);
+        $model = preg_replace('/\$showFields;/', $showFields, $model);
+        $model = preg_replace('/\$editFormValidations;/', $editFormValidations, $model);
+        $model = preg_replace('/\$updatedFieldsFromForm;/', $updatedFieldsFromForm, $model);
+
+        //Save Modified Template into File
+        $file =  $this->app['root'] . '/app/'. $this->model['NoSpaces'] .'.php';
+        file_put_contents($file, $model);
+
+        echo "round";
     }
 }
