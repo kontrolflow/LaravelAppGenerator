@@ -109,7 +109,9 @@ class ModelGenerator {
         //Insert Form Fields into Create Form Template
         $createFormTemplate = dirname(__FILE__) . '/../templates/create.blade.php';
         $createForm = file_get_contents($createFormTemplate);
+
         $finishedForm = preg_replace('/\$modelDisplayName\$/', $this->model['Name'], $createForm);
+        $finishedForm = preg_replace('/#ROUTE#/', $this->model['route'], $finishedForm);
         $finishedForm = preg_replace('/\$formFields\$/', $formFields, $finishedForm);
 
         //Save Modified Template into File

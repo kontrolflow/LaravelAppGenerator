@@ -1,10 +1,10 @@
 <div class="form-group">
-    <label for="name">MpropDisplayM</label>
+    <label for="MpropM">MpropDisplayM</label>
     <input
             type="text"
             class="form-control flex-fill @error('MpropM') is-invalid @enderror"
-            id="name"
-            name="name"
+            id="MpropM"
+            name="MpropM"
             placeholder=""
             value="{{ $McamelCaseM->MpropM }}"
     >

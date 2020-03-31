@@ -8,7 +8,7 @@ class AppToGenerate
 
     private function appDetails() {
         $this->app['name'] = 'Tool Directory';
-        $this->app['root'] = '/var/www/generation';
+        $this->app['root'] = '/var/www/laravelApp';
         //$this->app['root'] = '/var/www/laravelApp/app/LaravelAppGenerator/sandbox';
         $this->app['address'] = 'http://apps.abinsay.com';
         $this->app[''] = '';
@@ -16,15 +16,15 @@ class AppToGenerate
 
     private function modelDetails() {
 
-        $model['Name'] = 'Tool'; // Spaces Allowed
-        $model['NoSpaces'] = 'Tool'; // Used in Model
-        $model['camelCase'] = 'tool'; // Used everywhere
-        $model['camelCasePlural'] = 'tools';
+        $model['Name'] = 'App Generator'; // Spaces Allowed
+        $model['NoSpaces'] = 'AppGenerator'; // Used in Model
+        $model['camelCase'] = 'appGenerator'; // Used everywhere
+        $model['camelCasePlural'] = 'appGenerators';
 
         $model['pluralNoSpaces'] = 'Tools';
         $model['pluralName'] = 'Tools';
 
-        $model['route'] = 'tools'; // Used in route creation
+        $model['route'] = 'app-generators'; // Used in route creation
 
         $model['dbProperties'] = array('id, name, description, inventor, dateInvented');
 

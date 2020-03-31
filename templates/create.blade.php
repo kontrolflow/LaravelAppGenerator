@@ -14,7 +14,7 @@
 @endsection
 
 @section('cardBody')
-    <form method='POST' action='./'>
+    <form method='POST' action='/#ROUTE#'>
         @csrf
 $formFields$
         <button type="submit" class="btn btn-danger btn-block">Add $modelDisplayName$</button>

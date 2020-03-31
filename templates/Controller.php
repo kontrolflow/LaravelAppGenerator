@@ -21,7 +21,7 @@ class NoSpacesController extends Controller
         }
 
         $response['tableBody'] = '';
-        $camelCasePlural = R::findAll( 'camelCase' );
+        $camelCasePlural = R::findAll(strtolower ( 'camelCase' ));
         foreach($camelCasePlural as $camelCase) {
             $response['tableBody'] .= '<tr>';
             foreach ($fields as $prop => $display) {
@@ -49,7 +49,7 @@ class NoSpacesController extends Controller
         request()->validate($validationFields);
 
         // Scaffold New Name
-        $camelCase = R::dispense( 'camelCase' );
+        $camelCase = R::dispense( strtolower ('camelCase') );
 
         // Assign Form Input to New Name
         $storeFields = \App\NoSpaces::storedFieldsFromForm();
@@ -66,7 +66,7 @@ class NoSpacesController extends Controller
 
     public function show($id)
     {
-        $camelCase = R::load( 'camelCase', $id );
+        $camelCase = R::load( strtolower ('camelCase'), $id );
 
         $response['pageTitle'] = 'Name of ID #'.$camelCase->id;
 
@@ -93,7 +93,7 @@ class NoSpacesController extends Controller
 
     public function edit($id)
     {
-        $camelCase = R::load( 'camelCase', $id );
+        $camelCase = R::load(strtolower ( 'camelCase'), $id );
         $response['camelCase'] = $camelCase;
         $response['deleteUrl'] = '/#ROUTE#/' . $camelCase->id;
         return view('models.camelCase.edit', $response);
@@ -101,7 +101,7 @@ class NoSpacesController extends Controller
 
     public function update($id)
     {
-        $camelCase = R::load( 'camelCase', $id );
+        $camelCase = R::load( strtolower ('camelCase'), $id );
 
         // Get Validation Settings
         $validationFields = \App\NoSpaces::editFormValidations();
@@ -125,7 +125,7 @@ class NoSpacesController extends Controller
 
     public function destroy($id)
     {
-        $camelCase = R::load( 'camelCase', $id );
+        $camelCase = R::load( strtolower ('camelCase'), $id );
 
         R::trash( $camelCase );
 
